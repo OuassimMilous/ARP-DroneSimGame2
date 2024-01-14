@@ -48,19 +48,17 @@ int main(int argc, char *argv[]) {
     int targets_server[2];
     int server_targets[2];
 
-    int wd_server[2];
-    int server_wd[2];
 
    if (pipe(UI_server)   == -1 ||  pipe(server_UI)   == -1 ||
         pipe(keyboard_server) == -1 ||  pipe(server_keyboard) == -1 ||
         pipe(drone_server)    == -1 ||  pipe(server_drone)    == -1 ||
         pipe(obstacle_server) == -1 ||  pipe(server_obstacle) == -1 ||
-        pipe(targets_server)   == -1 ||  pipe(server_targets)   == -1 ||
-        pipe(wd_server) == -1 ||  pipe(server_wd) == -1 ) {
+        pipe(targets_server)   == -1 ||  pipe(server_targets)   == -1) {
         perror("pipe");
         exit(EXIT_FAILURE);
     }
     
+    // the semaphore for the log file
     sem_t *semLOG;
     semLOG = sem_open(LOGSEMPATH, O_CREAT, 0666, 1); 
     if (semLOG == SEM_FAILED)
@@ -100,13 +98,12 @@ int main(int argc, char *argv[]) {
     } else if (server == 0) {
        // Child process: Execute server
         char pipeargs [100]; 
-        sprintf(pipeargs,"%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d",
+        sprintf(pipeargs,"%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d|%d %d",
                                             UI_server[0], UI_server[1],   server_UI[0],   server_UI[1],
                                             keyboard_server[0], keyboard_server[1], server_keyboard[0], server_keyboard[1],
                                             drone_server[0],    drone_server[1],    server_drone[0],    server_drone[1],
                                             obstacle_server[0], obstacle_server[1], server_obstacle[0], server_obstacle[1],
-                                            targets_server[0],   targets_server[1],   server_targets[0],   server_targets[1],
-                                            wd_server[0], wd_server[1], server_wd[0], server_wd[1]);
+                                            targets_server[0],   targets_server[1],   server_targets[0],   server_targets[1]);
         char *arg_list[] = {pipeargs,"&", NULL};
         execvp("./build/server", arg_list);
         
@@ -224,9 +221,7 @@ int main(int argc, char *argv[]) {
         snprintf(targets_str, sizeof(targets_str), "%d", targets);
         snprintf(obstacles_str, sizeof(obstacles_str), "%d", obstacles);
 
-        // char pipeargs [100]; 
-        // sprintf(pipeargs,"%d %d|%d %d",
-        //                     wd_server[0], wd_server[1], server_wd[0], server_wd[1]);
+
         // Build the arg_list with PIDs as command-line arguments
         char *arg_list[] = {"konsole", "-e","./build/watchdog",server_str, UI_str, drone_str, keyboard_str,obstacles_str,targets_str,NULL};
         execvp("konsole", arg_list);

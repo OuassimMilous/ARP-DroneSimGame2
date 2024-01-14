@@ -58,7 +58,6 @@ int main(int argc, char *argv[])
 
 
     while(1) {
-       //  read(server_obstacles[0], &data, sizeof(data));
        // Create obstacles
         for (int i = 0; i < NUM_OBSTACLES * 2; i += 2) {
             do {

@@ -18,6 +18,7 @@ int Score;
 FILE* file;
 sem_t* LOGsem; 
 char msg[100];
+
 void logit(char *msg){
       sem_wait(LOGsem);
 
@@ -63,9 +64,7 @@ int main(int argc, char const *argv[]) {
     }
 
 
-
-     // PIPES
-    
+     // PIPES    
     int  UI_server[2], server_UI[2];
     sscanf(argv[1], "%d %d|%d %d",  &UI_server[0], &UI_server[1], &server_UI[0], &server_UI[1]);
     close(UI_server[0]); //Close unnecessary pipes
@@ -90,16 +89,13 @@ int main(int argc, char const *argv[]) {
     while (1) {
         do
         {
-        read(server_UI[0], &data, sizeof(data));
+        read(server_UI[0], &data, sizeof(data)); // recieve the updated data
         } while (data.obstacles[0]==0);
 
-        
+        // calculating the score  
         Score = ( 5 * NUM_TARGETS + (2 * NUM_OBSTACLES) + (3 * data.targetReached) - (data.Cobs_touching  * 2) - (get_elapsed_time() * 1.5));
 
-
         // Clear the screen
-
-        
         clear();
 
         int newHeight, newWidth;
@@ -114,7 +110,7 @@ int main(int argc, char const *argv[]) {
         // Draw the bordered box
         box(stdscr, 0, 0);
 
-
+        // checking if the user have won
         bool all_targets_hit = true;
         for (int i = 0; i < NUM_TARGETS * 2; ++i) {
             if (data.targets[i] != -1) {

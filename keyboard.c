@@ -19,13 +19,6 @@ int main(int argc, char *argv[])
     char keyPressed;
     struct data data;
     char myChar;
-    // // Open the semaphore for FIFO
-    // sem_t* semFIFO = sem_open(SEMFIFOPATH, O_RDWR, 0);
-    // if (semFIFO == SEM_FAILED) {
-    //     perror("sem_open3");
-    //     exit(EXIT_FAILURE);
-    // }
-    // sem_post(semFIFO);
 
     // Semaphore for logging
     sem_t *LOGsem = sem_open(LOGSEMPATH, O_RDWR, 0666); // Initial value is 1
@@ -37,6 +30,7 @@ int main(int argc, char *argv[])
     sem_post(LOGsem);
 
 
+// the pipes
     int keyboard_server[2], server_keyboard[2];
     sscanf(argv[1], "%d %d|%d %d",  &keyboard_server[0], &keyboard_server[1], &server_keyboard[0], &server_keyboard[1]);
     close(keyboard_server[0]); 
@@ -48,7 +42,6 @@ nodelay(stdscr, TRUE);
     
     while (1)
     {
-
         keyPressed = getch();
 
         if (keyPressed != ERR)

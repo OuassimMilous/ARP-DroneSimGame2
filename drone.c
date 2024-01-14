@@ -83,6 +83,7 @@ void calc_position(char key, double position[6]) {
             double angle = atan2(data.obstacles[i * 2 +1] - data.obstacles[i * 2], data.drone_pos[1] - data.drone_pos[0]);
             sprintf(msg, "distance %f",distance);
             logit(msg);
+            // if it reaches an obstacle, calcilate the repolsive force
             if (distance <= THRESH_TOUCHOBS) {
                 data.Cobs_touching += 1;
    
