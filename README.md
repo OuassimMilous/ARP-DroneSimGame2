@@ -73,6 +73,8 @@
    ```
 
 ### Running:
-
+  ```sh
+  ./build/master
+  ```
 
 
