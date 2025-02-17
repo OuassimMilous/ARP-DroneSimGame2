@@ -94,13 +94,13 @@ int main(int argc, char *argv[]) {
     fd_set reading;
     FD_ZERO(&reading);  // Reset the set before each call to select
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 5; i++) {
         FD_SET(rec_pipes[i][0], &reading);
     }
 
     int max_pipe_fd = -1;  // Reset max_pipe_fd
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 5; i++) {
         if (rec_pipes[i][0] > max_pipe_fd) {
             max_pipe_fd = rec_pipes[i][0];
         }
@@ -144,7 +144,7 @@ int main(int argc, char *argv[]) {
                     }
                         break;
                     case 2: //drone
-                        // double position[6];
+                        // double position[5];
                         memcpy(data.drone_pos, updated_data.drone_pos, sizeof(updated_data.drone_pos));
                         sprintf(msg, "[Server]: New pos drone sent to UI %f,%f", data.drone_pos[0],data.drone_pos[1]);
                         logit(msg);

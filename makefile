@@ -5,7 +5,6 @@ clean-logs:
 clean:
 	rm build/*
 master:
-
 	gcc master.c -o build/master 
 
 server:
@@ -13,12 +12,6 @@ server:
 
 UI:
 	gcc UI.c -o build/UI  -lncurses
-
-obstacles:
-	gcc obstacles.c -o build/obstacles 
-
-targets:
-	gcc targets.c -o build/targets -lm
 
 keyboard:
 	gcc keyboard.c -o build/keyboard -lncurses
@@ -29,4 +22,8 @@ drone:
 watchdog:
 	gcc watchdog.c -o build/watchdog -lncurses
 
+obstacles:
+	gcc obstacles.c -o build/obstacles 
 
+targets:
+	gcc targets.c -o build/targets -lm
