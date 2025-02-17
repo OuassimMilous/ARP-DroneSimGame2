@@ -1,116 +1,78 @@
-## ARP SECOND ASSIGNMENT
+# ARP-DroneSimGame2
 
 ## Short Definitions of Active Components:
 
-#    Master (master.c):
-        Purpose: Creates the shared memory and the semaphores and it forks the processes and launches the other active components.
-        Primitives Used: Shared memory, semaphores, file operations, fork.
+### Master (master.c)
+- **Purpose:** Creates the semaphores, forks the processes, and launches the other active components.
+- **Primitives Used:** Semaphores, file operations, fork, pipes.
 
-#   Server (server.c):
-        Purpose: Manages shared memory and logs drone positions.
-        Primitives Used: Shared memory, semaphores, file operations.
+### Server (server.c)
+- **Purpose:** Manages communication between components and logs drone positions.
+- **Primitives Used:** Semaphores, file operations, pipes.
 
-#    UI (ui.c):
-        Purpose: Uses ncurses to display the drone position and UI messages.
-        Primitives Used: Shared memory, semaphores, ncurses.
+### UI (ui.c)
+- **Purpose:** Uses ncurses to display the drone position and UI messages.
+- **Primitives Used:** Semaphores, ncurses, pipes.
 
-#    Keyboard (keyboard.c):
-        Purpose: Captures keyboard input and sends it to the drone through a FIFO.
-        Primitives Used: Shared memory, semaphores, FIFO.
+### Keyboard (keyboard.c)
+- **Purpose:** Captures keyboard input and sends it to the drone through a pipe.
+- **Primitives Used:** Semaphores, pipes.
 
-#    Drone (drone.c):
-        Purpose: Simulates a drone's movement based on keyboard input.
-        Primitives Used: Shared memory, semaphores.
-        
- #    Targets (targets.c):
-        Purpose: Creates Targets and checks wether they were reached yet.
-        Primitives Used: Shared memory, semaphores.
-        
- #    Obstacles (obstacles.c):
-        Purpose: Creates obstacles and keeps on changing their position every now and then
-        Primitives Used: Shared memory, semaphores.
+### Drone (drone.c)
+- **Purpose:** Simulates a drone's movement based on keyboard input.
+- **Primitives Used:** Semaphores, pipes.
 
-#    Watchdog (watchdog.c):
-        Purpose: Monitors the status of all processes and logs them.
-        Primitives Used: Shared memory, semaphores.
+### Targets (targets.c)
+- **Purpose:** Creates targets and checks whether they were reached.
+- **Primitives Used:** Semaphores, pipes.
 
+### Obstacles (obstacles.c)
+- **Purpose:** Creates obstacles and keeps changing their positions periodically.
+- **Primitives Used:** Semaphores, pipes.
+
+### Watchdog (watchdog.c)
+- **Purpose:** Monitors the status of all processes and logs them.
+- **Primitives Used:** Semaphores, pipes.
 
 ## List of Components, Directories, Files:
 
-  #  Directories:
-        include/: Contains header files.
-        log/: Contains log files.
-        /: Contains source code files.
+### Directories:
+- `include/`: Contains header files.
+- `log/`: Contains log files.
+- `/`: Contains source code files.
 
-  #  Files:
-      	master.c: Main program.
-        server.c: Server component.
-        ui.c: UI component.
-        keyboard.c: Keyboard component.
-        drone.c: Drone component.
-        watchdog.c: Watchdog component.
-        constants.h: Header file with constant values.
-        Makefile: Build automation file.
-        readme.md: Documentation file.
+### Files:
+- `master.c`: Main program.
+- `server.c`: Server component.
+- `ui.c`: UI component.
+- `keyboard.c`: Keyboard component.
+- `drone.c`: Drone component.
+- `targets.c`: Targets component.
+- `obstacles.c`: Obstacles component.
+- `watchdog.c`: Watchdog component.
+- `constants.h`: Header file with constant values.
+- `Makefile`: Build automation file.
+- `README.md`: Documentation file.
 
 ## Instructions for Installing and Running:
 
-  #  Installation:
-        Ensure you have the necessary libraries installed (ncurses).
-        Compile the components using make (Execute "make" on the root directory). 
-        ps: if you cloned it from github you might need to execute "mkdir build" before building the project.
+### Prerequisites:
+- Ensure you have the necessary libraries installed:
+  - `ncurses`
+  - `konsole`
 
-   # Running:
-    ```
-    ./build/master.
-    ```
+### Installation:
+1. Clone the repository.
+2. Create the build directory:
+   ```sh
+   mkdir build
+   ```
+3. Compile the components using make:
+   ```sh
+   make
+   ```
 
-## Operational Instructions:
+### Running:
 
-  #  UI Window:
-        Displays the drone's position and coordinates.
-        No user interaction; visualizes the drone's movement.
-
-  #  Keyboard Window:
-        Press keys to control the drone's movement.
-        Logs keypresses.
-
-
-  #  Watchdog Window:
-        Monitors and logs the status of all processes.\
-        
-
-## Control Keys:
-
-  #  W (Move Up):
-        Increments the upward force on the drone, simulating an upward movement.
-
-  #  A (Move Left):
-        Decrements the horizontal force on the drone, simulating a leftward movement.
-
-  #  S (Move Down):
-        Decrements the downward force on the drone, simulating a downward movement.
-
-  #  D (Move Right):
-        Increments the horizontal force on the drone, simulating a rightward movement.
-
-  #  Q (Move Up-Left):
-        Simultaneously decrements horizontal force and increments upward force.
-
-  #  E (Move Up-Right):
-        Simultaneously increments horizontal force and increments upward force.
-
-  #  Z (Move Down-Left):
-        Simultaneously decrements horizontal force and decrements downward force.
-
-  #  C (Move Down-Right):
-        Simultaneously increments horizontal force and decrements downward force.
-
-  #  X (Stop):
-        Sets both horizontal and vertical forces to zero, stopping the drone.
-
-  #  ESC (Exit):
-        Exits the program.
-        
 
 
